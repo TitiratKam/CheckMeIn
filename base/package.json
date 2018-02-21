@@ -1,0 +1,22 @@
+{
+  "name": "checkmein",
+  "version": "1.0.0",
+  "description": "check me in application",
+  "main": "sever.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "dear nut",
+  "license": "ISC",
+
+"dependencies": {
+	"body-parser" : "^1.18.2",
+	"cors" : "^2.8.4",
+	"express" : "^4.13.4",
+	"rethinkdb" : "^2.2.1"
+
+}
+
+}
+
+

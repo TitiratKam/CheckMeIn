@@ -12,6 +12,9 @@ import OTRequest from './OTRequest.js';
 import LeaveRequest from './LeaveRequest.js';
 import Notification from './notification.js';
 import RequestDetail from './RequestDetail.js';
+import TestRequest from './TestRequest.js';
+import AttendanceHisTest from './Attendance_hisTest.js';
+import checkInTest from './check-inTest.js';
 
 
 import {StackNavigator, DrawerNavigator, DrawerItems} from 'react-navigation';
@@ -86,6 +89,15 @@ const CustomDrawerContentComponent = (props) => (
     },
     BeaconTest:{
       screen: BeaconTest
+    },
+    TestRequest:{
+      screen: TestRequest
+    },
+    AttendanceHisTest:{
+      screen: AttendanceHisTest
+    },
+    CheckInTest:{
+      screen: checkIn
     },
     //RequestDetail:{screen: RequestDetail},
     // detail: {

@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "expo": "^23.0.4",
+    "firebase": "^4.10.1",
     "lodash": "^4.17.5",
     "native-base": "^2.3.9",
     "react": "16.0.0",
@@ -27,6 +28,8 @@
     "react-native-beacons-manager": "^1.0.7",
     "react-native-bluetooth-state": "^2.0.0",
     "react-native-button": "^2.3.0",
+    "react-native-firestack": "^2.3.9",
+    "react-native-image-picker": "^0.26.7",
     "react-native-material-dropdown": "^0.8.0",
     "react-native-modalbox": "^1.4.2",
     "react-native-simple-modal": "^7.0.0",

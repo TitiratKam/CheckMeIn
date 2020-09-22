@@ -19,20 +19,21 @@ import {
   AsyncStorage,
   Alert
 }                             from 'react-native';
-//import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { Dropdown } from 'react-native-material-dropdown';
-import {Icon,Button,Container,Header,Content,Left,Title,Body,Right} from 'native-base';
+import {Icon,Button,Container,Header,Content,Left,Right} from 'native-base';
+
+// Buttons
 
 
-export default class LeaveRequest extends React.Component {
+export default class App extends Component {
 
-constructor(props) {
+ constructor(props) {
    super(props);
    this.state = {
-       hasToken:false,
-       userid:null,
+       requestid:null,
        chosenDate: new Date(),
-        modalDateFrom: false,
+       modalDateFrom: false,
        modalDateTo: false,
        strdate: null,
        endate: null,
@@ -40,9 +41,8 @@ constructor(props) {
        comment: null,
        leavetype: null,
        LTpicker:false,
-       user: null,
-       reportto:"",
-       requestid:""
+       requestDetail:[],
+       reqid:null
    };
 
    this.setDate = this.setDate.bind(this);
@@ -52,31 +52,86 @@ constructor(props) {
    this.setDateTo = this.setDateTo.bind(this);
    this.openDateFrom = this.openDateFrom.bind(this);
    this.openDateTo = this.openDateTo.bind(this);
-   this.addLeaverequest = this.addLeaverequest.bind(this);
-   this.addNoti = this.addNoti.bind(this);
-   this.userinfo = this.userinfo.bind(this);
+   this.editLeaverequest = this.editLeaverequest.bind(this);
+   this.requestDetail = this.requestDetail.bind(this);
 
  }
 
 
+ componentDidMount() {
+     var {params} = this.props.navigation.state;
+     var id = params.id;
+     this.setState({reqid: id});
+     console.log("111"+id);
+     console.log("222"+this.state.reqid);
+     //this.requestDetail();
 
-static navigationOptions = {
-        title: 'Leave Request',
-        headerLeft: null,
-        tabBarLabel:'Leave Request',
-        drawerIcon: ({tintColor}) => {
-            return (
-                <MaterialIcons
-                name="card-travel"
-                size={24}
-                style={{color: tintColor}}>
-                </MaterialIcons>
-                );
-        }
-    };
-////
+ }
 
-setDate(newDate) {
+
+   requestDetail(){
+      //  fetch('http://172.20.10.11:8003/api/v1.0/requestDetail', {
+      //      method: 'POST',
+      //      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      //      body: JSON.stringify({
+      //          requestid : this.state.reqid,
+      //  //       username: this.state.username,
+      //  //       password: this.state.password,
+      //      })
+      //    })
+       //
+      //      .then((response) => response.json())
+      //      .then((responseData) => {
+      //      //this.saveItem('id_token', responseData.id_token),
+      //      //Alert.alert( 'Signup Success!', 'Click the button to get a Chuck Norris quote!'),
+      //      //Actions.HomePage();
+      //      console.log(responseData);
+      //      // this.setState({strdate : responseData[0].strdate}),
+      //      // this.setState({endate : responseData[0].endate}),
+      //      // this.setState({leavetype : responseData[0].leavetype}),
+      //      // this.setState({comment : responseData[0].comment}),
+      //      // console.log('2222'+this.state.requestDetail);
+      //      //this.checkinCheck2();
+      //      //console.log(responseData[0].user_id),
+       //
+       //
+      //    })
+      //  //
+      //    .done();
+
+   }
+
+   editLeaverequest(){
+    //  fetch('http://172.20.10.11:8003/api/v1.0/updateLeaveReq', {
+    //        method: 'POST',
+    //        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+    //        body: JSON.stringify({
+    //            requestid : this.id,
+    //            strdate : this.state.strdate,
+    //            endate : this.state.endate,
+    //            leavetype : this.state.leavetype,
+    //            comment : this.state.comment,
+    //            time : this.state.time,
+     //
+     //
+    //        })
+    //      })
+     //
+    //        .then((response) => response.json())
+    //        .then((responseData) => {
+    //        console.log(responseData),
+    //        this.setState({requestid:responseData.generated_keys[0]}),
+    //        console.log(this.state.requestid),
+    //        this.addNoti(),
+    //         Alert.alert('Sent');
+     //
+    //      })
+    //    //
+    //      .done();
+   }
+
+
+   setDate(newDate) {
    this.setState({chosenDate: newDate});
    console.log(this.state.chosenDate);
  }
@@ -88,7 +143,7 @@ setDate(newDate) {
    var month = this.state.chosenDate.getMonth() + 1;
    var year = this.state.chosenDate.getFullYear();
 
-   this.setState({strdate: year + '-' + month + '-' + date});
+   this.setState({strdate: date + '-' + month + '-' + year});
    this.setState({chosenDate: new Date() });
 
    this.setState({modalDateFrom:false});
@@ -101,7 +156,7 @@ setDate(newDate) {
    var month = this.state.chosenDate.getMonth() + 1;
    var year = this.state.chosenDate.getFullYear();
 
-   this.setState({endate: year + '-' + month + '-' + date});
+   this.setState({endate: date + '-' + month + '-' + year});
    this.setState({chosenDate: new Date() });
 
    this.setState({modalDateTo:false});
@@ -118,30 +173,6 @@ setDate(newDate) {
    this.setState({modalDateTo:false});
  }
 
- componentDidMount() {
-   var {navigate} = this.props.navigation;
-
-    AsyncStorage.getItem('id').then((token) => {
-     this.setState({ hasToken: token !== null, isLoaded: true })
-     if (this.state.hasToken == true) {
-       var id = token;
-       console.log("asdfg"+id);
-       this.setState({ userid: id});
-       console.log("idLRE ="+ this.state.userid);
-       this.userinfo();
-     }
-       else{
-           }
-   });
-
-   //  AsyncStorage.multiGet(['email', 'password']).then((data) => {
-   //     let email = data[0][1];
-   //     let password = data[1][1];
-
-   //     if (email !== null)
-   //         //Your logic
-   // });
-}
 
    leavetypepicker(){
       if (this.state.LTpicker == false){
@@ -152,111 +183,18 @@ setDate(newDate) {
      }
    }
 
-    updateUser = (user) => {
-     this.setState({ user: user })
+   updateUser = (user) => {
+     this.setState({ leavetype: user })
   }
 
   send(){
-      this.addLeaverequest()
+      this.editLeaverequest()
   }
 
-   addLeaverequest(){
-     fetch('http://172.20.10.3:8008/api/v1.0/Request', {
-           method: 'POST',
-           headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-           body: JSON.stringify({
-             //var userid = request.body.userid;
-             //var AnsenceTypeName = request.body.AnsenceTypeName;
-             //var startdatetime = request.body.startdatetime;
-             //var AbsentDuration = request.body.AbsentDuration;
-             //var Reason = request.body.Reason;
-             //var Reportto = request.body.Reportto;
-             //var startdatextime = request.body.startdatextime;
-             //var enddatetime = request.body.enddatetime;
-             //var Absenttype2 = request.body.Absenttype2e;
-               userid : this.state.userid,
-               AnsenceTypeName : this.state.user,
-               startdatetime : this.state.strdate,
-               enddatetime : this.state.endate,
-               AbsentDuration : null,
-               Reason : this.state.comment,
-               Reportto : this.state.reportto,
-               AbsentDuration : null,
-               startdatextime : null,
-               Absenttype2e : null
-             })
-           })
-
-           .then((response) => response.json())
-           .then((responseData) => {
-           console.log("addLRQ"+responseData),
-           this.setState({requestid:responseData.generated_keys[0]}),
-           console.log(this.state.requestid),
-           //this.addNoti(),
-            Alert.alert('Sent');
-            })
-                   //
-            .done();
-          }
-
-   addNoti(){
-    //  fetch('http://172.20.10.11:8003/api/v1.0/Noti', {
-    //        method: 'POST',
-    //        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-    //        body: JSON.stringify({
-    //            requesttype : "leaverequest",
-    //            requestid : this.state.requestid,
-    //            notiTo : this.state.reportto
-     //
-     //
-    //             // "requesttype": requesttype,
-    //             //  "requestid": requestid,
-    //             //  "notiTo": notiTo
-    //        })
-    //      })
-     //
-    //        .then((response) => response.json())
-    //        .then((responseData) => {
-    //        //console.log(responseData);
-     //
-    //         //Alert.alert('Sent');
-     //
-    //      })
-    //    //
-    //      .done();
-   }
-
-   userinfo(){
-     console.log("user"+this.state.userid);
-     fetch('http://172.20.10.3:8008/api/v1.0/userinfo', {
-           method: 'POST',
-           headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-           body: JSON.stringify({
-               userid : this.state.userid
 
 
-                // "requesttype": requesttype,
-                //  "requestid": requestid,
-                //  "notiTo": notiTo
-           })
-         })
-
-           .then((response) => response.json())
-           .then((responseData) => {
-             console.log("reportto"+responseData);
-           this.setState({reportto:responseData[0].Reportto});
-            //Alert.alert('Sent');
-
-         })
-       //
-         .done();
-   }
-
-
-
-   render() {
-
-     let data = [{
+ render() {
+let data = [{
        value: 'Holiday',
      }, {
        value: 'Sick leave',
@@ -265,19 +203,6 @@ setDate(newDate) {
      }];
        return (
        <Container>
-       <Header>
-       <Left>
-           <Icon name="ios-menu" onPress={() =>
-               this.props.navigation.navigate('DrawerOpen')}/>
-       </Left>
-           <Body  style={styles.body}>
-               <Title>Leave Request</Title>
-           </Body>
-           <Right>
-           </Right>
-       </Header>
-
-
 
            <Content ContentContainerStyle={{
                flex:1,
@@ -395,7 +320,7 @@ setDate(newDate) {
                                  <TouchableOpacity style={[styles.input,{backgroundColor: 'rgb(240, 245, 245)'}]} onPress={this.leavetypepicker}>
 
                                      <Text style={styles.LT}>
-                                       {this.state.user || "Select"}
+                                       {this.state.leavetype || "Select"}
                                      </Text>
 
                                </TouchableOpacity>
@@ -445,12 +370,12 @@ setDate(newDate) {
                            </View>
 
 
-                           <Text style={styles.hdetail}>Reason</Text>
+                           <Text style={styles.hdetail}>Comment</Text>
                            <TextInput
                                style={styles.comment}
                                autoCorrect={false}
                                autoCapitalize={'none'}
-                               placeholder={"Comment"}
+                               placeholder={this.state.comment}
                                placeholderTextColor={'rgb(179, 179, 179)'}
                                onChangeText={(comment) => this.setState({comment})}
                                returnKeyType={'go'}
@@ -476,10 +401,6 @@ const styles = StyleSheet.create({
    container: {
        flex: 1,
        //backgroundColor: 'rgba(175, 214, 240,1.0)',
-   },
-   body: {
-       alignItems: 'center',
-       justifyContent: 'center',
    },
    button: {
        paddingVertical: 10,

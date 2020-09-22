@@ -1,24 +1,30 @@
 import React  from 'react';
 import {
-  StyleSheet, Text, View,Image,TextInput,Button,TouchableOpacity ,StatusBar,ScrollView,Alert
+  AsyncStorage,StyleSheet, Text, View,Image,TextInput,Button,TouchableOpacity ,StatusBar,ScrollView,Alert
   ,TouchableWithoutFeedback
 } from 'react-native';
+//import login from './test.js';
 import login from './log-in.js';
-import checkIn from './check-in.js';
-import AttendanceHis from './Attendance_his.js';
-import Base from './base_test.js';
-import BeaconTest from './BeacTest.js';
+import CheckIn from './check-in.js';
+//import AttendanceHis from './Attendance_his.js';
+import AttendanceHis from './MAH.js';
+
+// import Base from './base_test.js';
+// import BeaconTest from './BeacTest.js';
 import OTRequest from './OTRequest.js';
 import LeaveRequest from './LeaveRequest.js';
 import Notification from './notification.js';
-import RequestDetail from './RequestDetail.js';
-import TestRequest from './TestRequest.js';
-import AttendanceHisTest from './Attendance_hisTest.js';
-import checkInTest from './check-inTest.js';
-
+import RequestHis from './RequestHis.js';
+// import TestRequest from './TestRequest.js';
+// import AttendanceHisTest from './Attendance_hisTest.js';
+// import checkInTest from './check-inTest.js';
+import Calendar from './Calendar.js';
+import test from './test.js';
+import editReqForm from './editReqForm.js';
 
 import {StackNavigator, DrawerNavigator, DrawerItems} from 'react-navigation';
-import {Container,Header,Body,Content} from 'native-base';
+import {Icon,Container,Header,Body,Content} from 'native-base';
+
 
 
 //   const Navigation = StackNavigator(
@@ -33,7 +39,8 @@ import {Container,Header,Body,Content} from 'native-base';
 //     // },
 //     // reserve: {screen: reserve}
 //   }
-// ); 
+// );
+
 const CustomDrawerContentComponent = (props) => (
   <Container>
     <Header style={{ height: 200}}>
@@ -51,26 +58,39 @@ const CustomDrawerContentComponent = (props) => (
 )
 
 
-  const Navigation = StackNavigator(
-  {
-    RequestDetail:{screen: RequestDetail},
-    // detail: {
-    //   screen: detail,
-    //    navigationOptions: ({navigation}) => ({
-    //   title: `${navigation.state.params.title}`,
-    //   }),
-    // },
-    // reserve: {screen: reserve}
-  }
-); 
 
-  const DrawExample = DrawerNavigator(
+export const req = StackNavigator({
+  RequestHis : {
+    screen:RequestHis
+  },
+  editReqForm: {
+    screen: editReqForm
+  },
+  // LeaveRequest:{
+  //     screen: LeaveRequest
+  //   },
+  //   OTRequest:{
+  //     screen: OTRequest
+  //   },
+});
+
+export const reqtest = StackNavigator({
+  test : {
+    screen:test
+  },
+  editReqForm: { screen: editReqForm }
+});
+
+export const DrawExample = DrawerNavigator(
   {
     LogIn:{
-      screen: login
+      screen: login,
+      navigationOptions: ({navigation}) => ({
+      drawerLockMode: 'locked-closed'
+    })
     },
     CheckIn:{
-      screen: checkIn
+      screen: CheckIn,
     },
     Notification:{
       screen: Notification
@@ -84,32 +104,28 @@ const CustomDrawerContentComponent = (props) => (
     OTRequest:{
       screen: OTRequest
     },
-    Base:{
-      screen: Base
+    RequestHis:{
+      screen: req
     },
-    BeaconTest:{
-      screen: BeaconTest
-    },
-    TestRequest:{
-      screen: TestRequest
-    },
-    AttendanceHisTest:{
-      screen: AttendanceHisTest
-    },
-    CheckInTest:{
-      screen: checkIn
-    },
-    //RequestDetail:{screen: RequestDetail},
-    // detail: {
-    //   screen: detail,
-    //    navigationOptions: ({navigation}) => ({
-    //   title: `${navigation.state.params.title}`,
-    //   }),
+    // BeaconTest:{
+    //   screen: BeaconTest
     // },
-    // reserve: {screen: reserve}
+    // TestRequest:{
+    //   screen: TestRequest
+    // },
+    // AttendanceHisTest:{
+    //   screen: AttendanceHisTest
+    // },
+    // CheckInTest:{
+    //   screen: checkIn
+    // },
+    Calendar:{
+      screen: Calendar
+    },
+
   },
   {
-    initialRouteName: 'LogIn',
+    initialRouteName: 'CheckIn',
     drawerPosition: 'left',
     contentComponent: CustomDrawerContentComponent,
     drawerOpenRoute: 'DrawerOpen',
@@ -119,7 +135,8 @@ const CustomDrawerContentComponent = (props) => (
     activeTintColor: 'red',
     }
   }
-); 
+);
+
 
 
 const styles = StyleSheet.create({
@@ -131,7 +148,7 @@ const styles = StyleSheet.create({
       height: 150,
       width: 150
     }
-    
+
 });
 
 
